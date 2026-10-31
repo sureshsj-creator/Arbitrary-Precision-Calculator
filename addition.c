@@ -1,7 +1,6 @@
 #include "head.h"
 
-Status addition(Calc **head1, Calc **head2,
-                Calc **tail1, Calc **tail2)
+Status addition(Calc **head1, Calc **head2, Calc **tail1, Calc **tail2)
 {
     Calc *headR = NULL;
     Calc *tailR = NULL;
