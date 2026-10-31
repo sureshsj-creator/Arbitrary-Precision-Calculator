@@ -40,5 +40,11 @@ Status addition(Calc **head1,Calc **head2,Calc **tail1,Calc **tail2);
 
 Status subtraction(Calc **head1,Calc **head2,Calc **tail1,Calc **tail2);
 
+int list_compare(Calc *head1,Calc *head2);
+
+int data_compare(Calc *head1,Calc *head2);
+
+void swap_list(Calc **head1,Calc **head2,Calc **list1,Calc **list2);
+
 
 #endif

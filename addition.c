@@ -17,13 +17,13 @@ Status addition(Calc **head1, Calc **head2, Calc **tail1, Calc **tail2)
 
         if(temp1 != NULL)
         {
-            data += temp1->data;
+            data = data + temp1->data;
             temp1 = temp1->prev;
         }
 
         if(temp2 != NULL)
         {
-            data += temp2->data;
+            data = data + temp2->data;
             temp2 = temp2->prev;
         }
 
@@ -42,6 +42,7 @@ Status addition(Calc **head1, Calc **head2, Calc **tail1, Calc **tail2)
 
     return e_success;
 }
+
 Status insert_first(Calc **head, Calc **tail, int data)
 {
     Calc *newNode = malloc(sizeof(Calc));
