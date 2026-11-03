@@ -48,7 +48,10 @@ Status subtraction(Calc **head1, Calc **head2, Calc **tail1, Calc **tail2)
                 dataR =data;
             }
         }
-        insert_first(&headR,&tailR,dataR);
+        if(insert_first(&headR,&tailR,dataR)== e_failure)
+        {
+            printf("Error: Failed to insert digit during subtraction\n");
+        }
         temp1= temp1->prev;
     }
     headR->data= headR->data*sign;
@@ -71,9 +74,9 @@ int list_compare(Calc *head1, Calc *head2)
         temp2= temp2->next;
     }
     if(list1_count > list2_count)
-    return 0;
+    return NOSWAP;
     else if(list1_count < list2_count)
-    return 1;
+    return SWAP;
     else if(list1_count == list2_count)
     {
        return data_compare(head1,head2);
@@ -85,16 +88,16 @@ int data_compare(Calc *head1,Calc *head2)
     while(head1)
     {
         if(head1->data > head2->data)
-        return 0;
+        return NOSWAP;
         else if(head1->data < head2->data)
-        return 1;
+        return SWAP;
         else
         {
             head1= head1->next;
             head2= head2->next;
         }
     }
-    return 0;
+    return NOSWAP;
 }
 
 void swap_list(Calc **head1,Calc **head2,Calc **tail1,Calc **tail2)

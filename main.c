@@ -54,6 +54,11 @@ int main(int argc,char *argv[])
         if(subtraction(&head1,&head2,&tail1,&tail2)== e_failure)
         return 1;
     }
+    else if(op== e_multiplication)
+    {
+        if(multiplication(&head1,&head2,&tail1,&tail2)== e_failure)
+        return 1;
+    }
 
 }
 
@@ -64,14 +69,14 @@ OperationType check_operation_type(char opt)
         return e_addition;
     else if(opt == '-')
         return e_subtraction;
-    else if(opt == '*')
+    else if(opt == 'x')
         return e_multiplication;
     else if(opt == '/')
         return e_division;
     else
     {
-        printf("Invalid operator\n");
-        printf("Operator should be + , - , * , /\n");
+        printf("Invalid operator %c\n",opt);
+        printf("Operator should be + , - , x , /\n");
         return e_unsupported;
     }
 }

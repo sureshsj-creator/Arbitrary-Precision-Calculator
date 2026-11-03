@@ -30,7 +30,11 @@ Status addition(Calc **head1, Calc **head2, Calc **tail1, Calc **tail2)
         dataR = data % 10;
         carry = data / 10;
 
-        insert_first(&headR, &tailR, dataR);
+        if(insert_first(&headR, &tailR, dataR)== e_failure)
+        {
+            printf("Error: Failed to insert digit during addition\n");
+            return e_failure;
+        }
     }
 
     if(carry)
