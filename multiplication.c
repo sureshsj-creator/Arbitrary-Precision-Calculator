@@ -104,13 +104,13 @@ Status add_lists(Calc **headR1, Calc **tailR1, Calc **headR2, Calc **tailR2)
 
         if(temp1 != NULL)
         {
-            data += temp1->data;
+            data = data + temp1->data;
             temp1 = temp1->prev;
         }
 
         if(temp2 != NULL)
         {
-            data += temp2->data;
+            data = data + temp2->data;
             temp2 = temp2->prev;
         }
 
@@ -125,10 +125,8 @@ Status add_lists(Calc **headR1, Calc **tailR1, Calc **headR2, Calc **tailR2)
         insert_first(&headR, &tailR, carry);
     }
 
-    // Delete previous accumulated result
     delete_list(headR1, tailR1);
 
-    // Store new result
     *headR1 = headR;
     *tailR1 = tailR;
 
