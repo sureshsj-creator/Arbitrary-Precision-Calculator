@@ -7,7 +7,6 @@ Status multiplication(Calc **head1,Calc **head2,Calc **tail1,Calc **tail2)
    
     Calc *headR1=NULL, *tailR1=NULL;
     Calc *headR2=NULL, *tailR2=NULL;
-    Calc *headR=NULL, *tailR=NULL;
 
     int carry,count=0;
     int dataR,data;
