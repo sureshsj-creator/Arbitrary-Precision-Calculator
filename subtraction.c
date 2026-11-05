@@ -1,20 +1,19 @@
 #include "head.h"
 
-Status subtraction(Calc **head1, Calc **head2, Calc **tail1, Calc **tail2)
+Status subtraction(Dlist *list1, Dlist *list2)
 {
-    int ret = list_compare(*head1,*head2);
+    int ret = list_compare(list1, list2);
     int sign = 1;
     if(ret)
     {
         sign = -1;
-        swap_list(head1,head2,tail1,tail2);
+        swap_list(list1, list2);
     }
     int data,dataR,borrow= 0;
-    Calc *temp1= *tail1;
-    Calc *temp2= *tail2;
+    Calc *temp1 = list1->tail;
+    Calc *temp2 = list2->tail;
 
-    Calc *headR= NULL;
-    Calc *tailR= NULL;
+    Dlist result = {NULL, NULL};
     while(temp1 != NULL)
     {
         
@@ -48,18 +47,21 @@ Status subtraction(Calc **head1, Calc **head2, Calc **tail1, Calc **tail2)
                 dataR =data;
             }
         }
-        if(insert_first(&headR,&tailR,dataR)== e_failure)
+        if(insert_first(&result, dataR)== e_failure)
         {
             printf("Error: Failed to insert digit during subtraction\n");
         }
         temp1= temp1->prev;
     }
-    headR->data= headR->data*sign;
-    print_list(headR);
+    result.head->data = result.head->data * sign;
+    print_list(result.head);
 }
 
-int list_compare(Calc *head1, Calc *head2)
+int list_compare(Dlist *list1, Dlist *list2)
 {
+    Calc *head1 = list1->head;
+    Calc *head2 = list2->head;
+
     int list1_count=0,list2_count=0;
     Calc *temp1= head1;
     Calc *temp2= head2;
@@ -100,14 +102,9 @@ int data_compare(Calc *head1,Calc *head2)
     return NOSWAP;
 }
 
-void swap_list(Calc **head1,Calc **head2,Calc **tail1,Calc **tail2)
+void swap_list(Dlist *list1, Dlist *list2)
 {
-    
-    Calc *temp1= *head1;
-    *head1 = *head2;
-    *head2 = temp1;
-
-    Calc *temp2= *tail1;
-    *tail1 = *tail2;
-    *tail2 = temp2;
+    Dlist temp = *list1;
+    *list1 = *list2;
+    *list2 = temp;
 }

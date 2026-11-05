@@ -1,12 +1,11 @@
 #include "head.h"
 
-Status addition(Calc **head1, Calc **head2, Calc **tail1, Calc **tail2)
+Status addition(Dlist *list1, Dlist *list2)
 {
-    Calc *headR = NULL;
-    Calc *tailR = NULL;
+    Dlist result = {NULL, NULL};
 
-    Calc *temp1 = *tail1;
-    Calc *temp2 = *tail2;
+    Calc *temp1 = list1->tail;
+    Calc *temp2 = list2->tail;
 
     int data, dataR;
     int carry = 0;
@@ -30,7 +29,7 @@ Status addition(Calc **head1, Calc **head2, Calc **tail1, Calc **tail2)
         dataR = data % 10;
         carry = data / 10;
 
-        if(insert_first(&headR, &tailR, dataR)== e_failure)
+        if(insert_first(&result, dataR)== e_failure)
         {
             printf("Error: Failed to insert digit during addition\n");
             return e_failure;
@@ -39,15 +38,15 @@ Status addition(Calc **head1, Calc **head2, Calc **tail1, Calc **tail2)
 
     if(carry)
     {
-        insert_first(&headR, &tailR, carry);
+        insert_first(&result, carry);
     }
 
-    print_list(headR);
+    print_list(result.head);
 
     return e_success;
 }
 
-Status insert_first(Calc **head, Calc **tail, int data)
+Status insert_first(Dlist *list, int data)
 {
     Calc *newNode = malloc(sizeof(Calc));
     if(newNode == NULL)
@@ -59,16 +58,16 @@ Status insert_first(Calc **head, Calc **tail, int data)
     newNode->prev = NULL;
     newNode->next = NULL;
 
-    if(*head == NULL)
+    if(list->head == NULL)
     {
-        *head= newNode;
-        *tail= newNode;
+        list->head= newNode;
+        list->tail= newNode;
         return e_success;
     }
 
-    newNode->next = *head;
-    (*head)->prev = newNode;
-    *head = newNode;
+    newNode->next = list->head;
+    list->head->prev = newNode;
+    list->head= newNode;
     return e_success;
 
 }

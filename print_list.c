@@ -14,7 +14,7 @@ void print_list(Calc *head)
 		    /* Printing the list */
 		    printf("%d", head -> data);
 
-		    /* Travering in forward direction */
+		    /* Traversing in forward direction */
 		    head = head -> next;
 	    }
     	printf("\n");

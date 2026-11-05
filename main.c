@@ -8,61 +8,69 @@ int main(int argc,char *argv[])
         printf("Usage: ./a.out <operand1> <operator> <operand2>\n");
         return 1;
     }
-    Calc *head1 = NULL;
-    Calc *head2 = NULL;
-    Calc *tail1 = NULL;
-    Calc *tail2 = NULL;
+    Dlist list1 = {NULL, NULL};
+    Dlist list2 = {NULL, NULL};    
 
-    char *str1 = argv[1];
-    char *str2 = argv[3];
-
-    int data,i=0;
-    
-
-    while(str1[i]!='\0')
+    if(create_list(&list1, argv[1])== e_failure)
     {
+        printf("Error: Unable to create list1.\n");
+        return 1;
+    }
 
-        data = str1[i]-'0';
-        if(insert_last(&head1,&tail1,data)==e_failure)
-        {
-            printf("Data not inserted properly in list 1\n");
-            return 1;
-        }
-        i++;
-    }
-    i=0;
-    while(str2[i]!='\0')
+    if(create_list(&list2, argv[3])== e_failure)
     {
-        data = str2[i]-'0';
-        if(insert_last(&head2,&tail2,data)==e_failure)
-        {
-            printf("Data not inserted properly in list 2\n");
-            return 1;
-        }
-        i++;
+        printf("Error: Unable to create list2.\n");
+        return 1;
     }
+   
 
     OperationType op = check_operation_type(argv[2][0]);
     
     if(op== e_addition)
     {
-        if(addition(&head1,&head2,&tail1,&tail2)== e_failure)
+        if(addition(&list1, &list2)== e_failure)
         return 1;
     }
     else if(op== e_subtraction)
     {
-        if(subtraction(&head1,&head2,&tail1,&tail2)== e_failure)
+        if(subtraction(&list1, &list2)== e_failure)
         return 1;
     }
     else if(op== e_multiplication)
     {
-        if(multiplication(&head1,&head2,&tail1,&tail2)== e_failure)
+        if(multiplication(&list1, &list2)== e_failure)
+        return 1;
+    }
+    else if(op== e_division)
+    {
+        if(division(&list1, &list2)== e_failure)
         return 1;
     }
 
 }
 
+Status create_list(Dlist *list, char str[])
+{    
+    int data, i=0;
+    while(str[i]!='\0')
+    {
+        if(str[i] < '0' || str[i] > '9')
+        {
+            printf("Error: Invalid number, Only digits 0-9 are allowed.\n");
+            return e_failure;
+        }
 
+
+        data = str[i]-'0';
+        if(insert_last(list, data)==e_failure)
+        {
+            printf("Data not inserted properly in list 1\n");
+            return e_failure;
+        }
+        i++;
+    }
+    return e_success;
+}
 OperationType check_operation_type(char opt)
 {
     if(opt == '+')

@@ -3,6 +3,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 #define SWAP 1
 #define NOSWAP 0
@@ -30,28 +31,38 @@ typedef struct calc
 
 }Calc;
 
+typedef struct
+{
+    Calc *head;
+    Calc *tail;
+} Dlist;
+
+Status create_list(Dlist *list, char str[]);
+
 OperationType check_operation_type(char opt);
 
-Status insert_last(Calc **head, Calc **tail,int data);
+Status insert_last(Dlist *list, int data);
 
-Status insert_first(Calc **head, Calc **tail,int data);
+Status insert_first(Dlist *list, int data);
 
 void print_list(Calc *head);
 
-Status addition(Calc **head1,Calc **head2,Calc **tail1,Calc **tail2);
+Status addition(Dlist *list1, Dlist *list2);
 
-Status subtraction(Calc **head1,Calc **head2,Calc **tail1,Calc **tail2);
+Status subtraction(Dlist *list1, Dlist *list2);
 
-int list_compare(Calc *head1,Calc *head2);
+int list_compare(Dlist *list1, Dlist *list2);
 
-int data_compare(Calc *head1,Calc *head2);
+int data_compare(Calc *head1, Calc *head2);
 
-void swap_list(Calc **head1,Calc **head2,Calc **list1,Calc **list2);
+void swap_list(Dlist *list1, Dlist *list2);
 
-Status multiplication(Calc **head1,Calc **head2,Calc **tail1,Calc **tail2);
+Status multiplication(Dlist *list1, Dlist *list2);
 
-Status delete_list(Calc **head, Calc **tail);
+Status delete_list(Dlist *list);
 
-Status add_lists(Calc **headR1, Calc **tailR1, Calc **headR2, Calc **tailR2);
+Status add_lists(Dlist *list1, Dlist *list2);
+
+Status division(Dlist *list1, Dlist *list2);
 
 #endif

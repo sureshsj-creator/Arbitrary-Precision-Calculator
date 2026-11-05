@@ -1,19 +1,19 @@
 #include "head.h"
 
-Status multiplication(Calc **head1,Calc **head2,Calc **tail1,Calc **tail2)
+Status multiplication(Dlist *list1, Dlist *list2)
 {
-    Calc *temp1= *tail1;
-    Calc *temp2= *tail2;
+    Calc *temp1 = list1->tail;
+    Calc *temp2 = list2->tail;
    
-    Calc *headR1=NULL, *tailR1=NULL;
-    Calc *headR2=NULL, *tailR2=NULL;
+    Dlist result = {NULL, NULL};
+    Dlist partial = {NULL, NULL};
 
     int carry,count=0;
     int dataR,data;
 
     while(temp2 != NULL)
     {
-        temp1 = *tail1;
+        temp1 = list1->tail;
         carry = 0;
 
         while(temp1 != NULL)
@@ -23,77 +23,71 @@ Status multiplication(Calc **head1,Calc **head2,Calc **tail1,Calc **tail2)
             dataR = data % 10;
             carry = data / 10;
 
-            insert_first(&headR2, &tailR2, dataR);
+            insert_first(&partial, dataR);
 
             temp1 = temp1->prev;
         }
 
         if(carry != 0)
         {
-            insert_first(&headR2, &tailR2, carry);
+            insert_first(&partial, carry);
         }
 
         for(int i = 0; i < count; i++)
         {
-            insert_last(&headR2, &tailR2, 0);
+            insert_last(&partial, 0);
         }
 
-        if(headR1 == NULL)
+        if(result.head == NULL)
         {
-            headR1 = headR2;
-            tailR1 = tailR2;
-
-            headR2 = NULL;
-            tailR2 = NULL;
+            result = partial;
+            partial.head = NULL;
+            partial.tail = NULL;
         }
         else
         {
-            add_lists(&headR1, &tailR1,&headR2, &tailR2);
-
-            delete_list(&headR2, &tailR2);
+            add_lists(&result, &partial);
+            delete_list(&partial);
         }
 
         count++;
         temp2 = temp2->prev;
     }
 
-    delete_list(head1, tail1);
-
-    print_list(headR1);
+    print_list(result.head);
     return e_success;
 }
 
 
-Status delete_list(Calc **head, Calc **tail)
+Status delete_list(Dlist *list)
 {
-    if(*head==NULL)
+    if(list->head==NULL)
     {
         return e_failure;
     }
     
-    while((*head)->next!=NULL)
+    while(list->head->next!=NULL)
     {
-        *head=(*head)->next;
-        free((*head)->prev);
-        (*head)->prev=NULL;
+        list->head= list->head->next;
+        free(list->head->prev);
+        list->head->prev=NULL;
     }
-    if((*head)->next==NULL)
+    if(list->head->next==NULL)
     {
-        free(*head);
-        *head=NULL;
-        *head=NULL;
+        free(list->head);
+        list->head= NULL;
+        list->tail= NULL;
         return e_success;
     }
     return e_success;
 }
 
-Status add_lists(Calc **headR1, Calc **tailR1, Calc **headR2, Calc **tailR2)
+Status add_lists(Dlist *list1, Dlist *list2)
 {
-    Calc *temp1 = *tailR1;
-    Calc *temp2 = *tailR2;
+    Calc *temp1 = list1->tail;
+    Calc *temp2 = list2->tail;
 
-    Calc *headR = NULL;
-    Calc *tailR = NULL;
+    Dlist result = {NULL, NULL};
 
     int data, dataR;
     int carry = 0;
@@ -117,18 +111,17 @@ Status add_lists(Calc **headR1, Calc **tailR1, Calc **headR2, Calc **tailR2)
         dataR = data % 10;
         carry = data / 10;
 
-        insert_first(&headR, &tailR, dataR);
+        insert_first(&result, dataR);
     }
 
     if(carry)
     {
-        insert_first(&headR, &tailR, carry);
+        insert_first(&result, carry);
     }
 
-    delete_list(headR1, tailR1);
+    delete_list(list1);
 
-    *headR1 = headR;
-    *tailR1 = tailR;
+    *list1 = result;
 
     return e_success;
 }
