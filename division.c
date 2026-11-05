@@ -1,6 +1,6 @@
 #include "head.h"
 
-Status division(Calc **head1, Calc **head2, Calc **tail1, Calc **tail2)
+Status division(Dlist *list1, Dlist *list2)
 {
     
 }
