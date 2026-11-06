@@ -49,7 +49,9 @@ void print_list(Calc *head);
 
 Status addition(Dlist *list1, Dlist *list2);
 
-Status subtraction(Dlist *list1, Dlist *list2);
+Status subtraction(Dlist *list1, Dlist *list2, int data);
+
+void remove_leading_zeroes(Dlist* list);
 
 int list_compare(Dlist *list1, Dlist *list2);
 
@@ -63,6 +65,8 @@ Status delete_list(Dlist *list);
 
 Status add_lists(Dlist *list1, Dlist *list2);
 
-Status division(Dlist *list1, Dlist *list2);
+Status division(Dlist *list1, Dlist *list2, Dlist *result);
+
+void clear_list(Dlist* list);
 
 #endif

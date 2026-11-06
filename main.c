@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "head.h"
 
 int main(int argc,char *argv[])
@@ -10,6 +9,7 @@ int main(int argc,char *argv[])
     }
     Dlist list1 = {NULL, NULL};
     Dlist list2 = {NULL, NULL};    
+    Dlist result = {NULL, NULL};
 
     if(create_list(&list1, argv[1])== e_failure)
     {
@@ -33,7 +33,7 @@ int main(int argc,char *argv[])
     }
     else if(op== e_subtraction)
     {
-        if(subtraction(&list1, &list2)== e_failure)
+        if(subtraction(&list1, &list2, 1)== e_failure)
         return 1;
     }
     else if(op== e_multiplication)
@@ -43,10 +43,10 @@ int main(int argc,char *argv[])
     }
     else if(op== e_division)
     {
-        if(division(&list1, &list2)== e_failure)
+        if(division(&list1, &list2,&result)== e_failure)
         return 1;
     }
-
+    return 0;
 }
 
 Status create_list(Dlist *list, char str[])
@@ -84,12 +84,12 @@ OperationType check_operation_type(char opt)
     else
     {
         printf("Invalid operator %c\n",opt);
-        printf("Operator should be + , - , x , /\n");
+        printf("Operator should be + , - , x , /.\n");
         return e_unsupported;
     }
 }
 
-Status insert_last(Calc **head,Calc **tail,int data)
+Status insert_last(Dlist *list, int data)
 {
     Calc *newNode = malloc(sizeof(Calc));
     if(newNode == NULL)
@@ -101,14 +101,14 @@ Status insert_last(Calc **head,Calc **tail,int data)
     newNode->prev=NULL;
     newNode->next=NULL;
 
-    if(*head == NULL)
+    if(list->head == NULL)
     {
-        *head = newNode;
-        *tail = newNode;
+        list->head = newNode;
+        list->tail = newNode;
         return e_success;
     }
-    newNode->prev = *tail;
-    (*tail)->next = newNode;
-    *tail = newNode;
+    newNode->prev = list->tail;
+    list->tail->next = newNode;
+    list->tail = newNode;
     return e_success;
 }
