@@ -53,7 +53,7 @@ Status multiplication(Dlist *list1, Dlist *list2)
         count++;
         temp2 = temp2->prev;
     }
-
+    remove_leading_zeroes(&result);
     print_list(result.head);
     return e_success;
 }
