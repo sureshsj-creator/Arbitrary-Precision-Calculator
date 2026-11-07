@@ -10,7 +10,7 @@ Status division(Dlist *list1, Dlist *list2, Dlist *result)
     int count = 0;
     int integer_digits = 0;
 
-    // Validate division by zero
+    /* Validate division by zero */
     while (temp2 && temp2->data == 0)
         temp2 = temp2->next;
 
@@ -20,7 +20,7 @@ Status division(Dlist *list1, Dlist *list2, Dlist *result)
         return e_failure;
     }
 
-    // STEP 1: Calculate integer part
+    /* Calculate integer part */
     while (temp1)
     {
         if (insert_last(&current, temp1->data) == e_failure)
@@ -33,7 +33,7 @@ Status division(Dlist *list1, Dlist *list2, Dlist *result)
 
         count = 0;
 
-        // Repeated subtraction
+        /* Repeated subtraction */
         while (list_compare(&current, list2) == NOSWAP)
         {
             if (subtraction(&current, list2, 0) == e_failure)
@@ -45,7 +45,7 @@ Status division(Dlist *list1, Dlist *list2, Dlist *result)
             count++;
         }
 
-        // Store integer quotient digit
+        /* Store integer quotient digit */
         if (insert_last(result, count) == e_failure)
         {
             clear_list(&current);
@@ -55,10 +55,8 @@ Status division(Dlist *list1, Dlist *list2, Dlist *result)
         temp1 = temp1->next;
     }
 
-    // STEP 2: Remove leading zeroes
     remove_leading_zeroes(result);
 
-    // STEP 3: Count integer quotient digits
     Calc *temp = result->head;
 
     while (temp)
@@ -67,10 +65,10 @@ Status division(Dlist *list1, Dlist *list2, Dlist *result)
         temp = temp->next;
     }
 
-    // STEP 4: Calculate two decimal places
+    /* Calculate two decimal places */
     for (int i = 0; i < 2; i++)
     {
-        // Multiply remainder by 10
+        /* Multiply remainder by 10 */
         if (insert_last(&current, 0) == e_failure)
         {
             clear_list(&current);
@@ -81,7 +79,6 @@ Status division(Dlist *list1, Dlist *list2, Dlist *result)
 
         count = 0;
 
-        // Repeated subtraction
         while (list_compare(&current, list2) == NOSWAP)
         {
             if (subtraction(&current, list2, 0) == e_failure)
@@ -93,7 +90,7 @@ Status division(Dlist *list1, Dlist *list2, Dlist *result)
             count++;
         }
 
-        // Store decimal digit
+        /* Store decimal digit */
         if (insert_last(result, count) == e_failure)
         {
             clear_list(&current);
@@ -101,7 +98,6 @@ Status division(Dlist *list1, Dlist *list2, Dlist *result)
         }
     }
 
-    // STEP 5: Print quotient with decimal point
     temp = result->head;
 
     int i = 0;
@@ -126,7 +122,7 @@ Status division(Dlist *list1, Dlist *list2, Dlist *result)
 
 void clear_list(Dlist* list)
 {
-    // Deleting all nodes of list
+    /* Deleting all nodes of list */
     while(list->head)
     {
         Calc *temp = list->head;

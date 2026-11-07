@@ -23,7 +23,7 @@ Status multiplication(Dlist *list1, Dlist *list2)
             dataR = data % 10;
             carry = data / 10;
 
-            insert_first(&partial, dataR);
+            insert_first(&partial, dataR);      //Insert the data into Partial list
 
             temp1 = temp1->prev;
         }
@@ -35,7 +35,7 @@ Status multiplication(Dlist *list1, Dlist *list2)
 
         for(int i = 0; i < count; i++)
         {
-            insert_last(&partial, 0);
+            insert_last(&partial, 0);       //Insert 0 at last in partial list
         }
 
         if(result.head == NULL)

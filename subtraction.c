@@ -21,7 +21,7 @@ Status subtraction(Dlist *list1, Dlist *list2, int print)
 
     Dlist result = {NULL, NULL};
 
-    // Perform subtraction from right to left
+    /* Perform subtraction from right to left */
     while (temp1 != NULL)
     {
         if (temp2 != NULL)
@@ -66,24 +66,26 @@ Status subtraction(Dlist *list1, Dlist *list2, int print)
 
         temp1 = temp1->prev;
     }
-    // Remove leading zeroes
+    /* Remove leading zeroes */
     remove_leading_zeroes(&result);
 
-    // Apply negative sign to first digit
+    /* Apply negative sign to first digit */
     if (result.head != NULL)
     {
         result.head->data = result.head->data * sign;
     }
 
-    // Replace list1 with subtraction result
+    /* Free old list nodes */
+    clear_list(list1);
 
+    /* Transfer result to list1 */
     list1->head = result.head;
     list1->tail = result.tail;
 
     if(print)
     print_list(result.head);
 
-    // Transfer ownership
+    /* Transfer ownership */
     result.head = NULL;
     result.tail = NULL;
 
@@ -101,12 +103,14 @@ int list_compare(Dlist *list1, Dlist *list2)
     Calc *temp1 = head1;
     Calc *temp2 = head2;
 
+    /* Traverse list1 */
     while (temp1)
     {
         list1_count++;
         temp1 = temp1->next;
     }
 
+    /* Traverse list2 */
     while (temp2)
     {
         list2_count++;
@@ -119,7 +123,7 @@ int list_compare(Dlist *list1, Dlist *list2)
     else if (list1_count < list2_count)
         return SWAP;
 
-    else
+    else                                        //if Both Operand's Digits are equal
         return data_compare(head1, head2);
 }
 

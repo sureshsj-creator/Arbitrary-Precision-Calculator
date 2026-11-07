@@ -1,5 +1,6 @@
 #include "head.h"
 
+int result_negative = 0;
 Status addition(Dlist *list1, Dlist *list2)
 {
     Dlist result = {NULL, NULL};
@@ -8,7 +9,7 @@ Status addition(Dlist *list1, Dlist *list2)
     Calc *temp2 = list2->tail;
 
     int data, dataR;
-    int carry = 0;
+    int carry = 0;          //set carry to 0
 
     while(temp1 != NULL || temp2 != NULL)
     {
@@ -26,8 +27,8 @@ Status addition(Dlist *list1, Dlist *list2)
             temp2 = temp2->prev;
         }
 
-        dataR = data % 10;
-        carry = data / 10;
+        dataR = data % 10;              //extract last digit
+        carry = data / 10;              //Taking Carry
 
         if(insert_first(&result, dataR)== e_failure)
         {
@@ -40,6 +41,9 @@ Status addition(Dlist *list1, Dlist *list2)
     {
         insert_first(&result, carry);
     }
+
+    if(result_negative== 1)
+        printf("-");
 
     print_list(result.head);
 
